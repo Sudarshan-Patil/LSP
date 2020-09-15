@@ -1,0 +1,2 @@
+Demo of Input Ouptput rediction
+Addition of 10 20 is 30

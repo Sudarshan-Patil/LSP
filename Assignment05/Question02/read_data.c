@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
+#include<fcntl.h>
 
 struct Employee
 {
@@ -10,24 +11,19 @@ struct Employee
     long salary;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
-    struct Employee emp1 = {1, "AAA", "Pune", 20000};
-    struct Employee emp2 = {2, "BBB", "Mumbai", 10000};
-    struct Employee emp3 = {3, "CCC", "Delhi", 15000};
-    struct Employee emp4 = {4, "DDD", "Chennai", 25000};
+    int fd=0, ret = 0;
+    struct Employee emp;
+    if (argc != 2) {
+        printf("Please enter teh file name");
+        return 0;
+    }
 
-    FILE *of;
-    of= fopen ("text.txt", "w");
-
-    fwrite (&emp1, sizeof(struct Employee), 1, of);
-    fwrite (&emp2, sizeof(struct Employee), 1, of);
-    fwrite (&emp3, sizeof(struct Employee), 1, of);
-    fwrite (&emp4, sizeof(struct Employee), 1, of);    
-
-    if (of == 0) {
-        printf("Unable to find the file");
-        fclose (of);
-        return -1;
+    fd = open(argv[1], O_RDONLY);
+    printf("File content is : \n");
+    while((ret = read(fd, &emp, sizeof(emp))) != 0)
+    {
+        printf("Emp id : %d, Name : %s, Address : %s, Salary : %ld\n", emp.empid, emp.name, emp.address, emp.salary);
     }
 }

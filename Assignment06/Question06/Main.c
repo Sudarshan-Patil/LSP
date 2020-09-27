@@ -48,13 +48,7 @@ int main(int argc, char *argv[])
                 lseek(fd, 1024-sobj.st_size, SEEK_CUR);
                 write(fd, dip->d_name, sizeof(dip->d_name));                
             } else {
-                buffer = (char*)malloc(1024);                
-                read(fd, buffer, sizeof(buffer));
-                printf("%s\n", buffer);
-                close(fd);
-                remove(name);                
-                fd = creat(name, 0777);
-                write(fd, buffer, sizeof(buffer));
+                ret = truncate(name, 1024);                
             }   
             close(fd);
         }        

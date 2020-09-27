@@ -5,8 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    int fd, ret;
-    char *buffer;
+    int fd = 0, ret = 0;    
     
     fd = open(argv[1], O_RDONLY);
 
@@ -22,14 +21,13 @@ int main(int argc, char *argv[])
         printf("File opened successfully\n");
     }
     
-    buffer = (char*)malloc(atoi(argv[2]));                
-    read(fd, buffer, sizeof(buffer));    
-    close(fd);
-    remove(argv[1]);                
-    fd = creat(argv[1], 0777);
-    write(fd, buffer, sizeof(buffer));
-
-    printf("File content is : %s\n", buffer);
+    ret = truncate(argv[1], argv[2]);
+    
+    if (ret == -1) {
+        printf("Unable to truncate data");
+    } else {
+        printf("Data truncated successfully")
+    }
     
     close(fd);
     

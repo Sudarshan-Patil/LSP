@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<unistd.h>
+#include<signal.h>
 
 int main()
 {
@@ -8,13 +9,13 @@ pid_t pid;
 
 	if(fork() == 0)
 	{
-		printf("Before process creation\n");
+		printf("Before process creation pid: %d\n", getpid());
 		execl("./process1","NULL",NULL);
 	}
 	else
 	{
 		printf("Inside Parent process\n");
-		return 0;
+        kill(pid,SIGKILL);        
 	}
 
 	return 0;

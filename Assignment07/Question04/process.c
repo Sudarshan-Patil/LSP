@@ -6,6 +6,7 @@
 int main()
 {
     int child1 = 0, child2 = 0;
+    int pid=0,status=0;
     
     child1 = fork();    
     
@@ -31,7 +32,7 @@ int main()
         printf("Parent of parent process is (Terminal) : %d\n",getppid());
         printf("Parent says : Value of ret is : %d\n",child1);
         printf("-----------------\n");
-        sleep(10);
+        pid = wait(&status);
         kill(child1,SIGKILL);
         kill(child2,SIGKILL);
     }
